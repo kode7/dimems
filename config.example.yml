@@ -1,0 +1,107 @@
+# Dimems Configuration Example
+# Copy this file to config.yml and adjust the paths for your setup
+
+vault:
+  # Path to your vault directory (can be absolute or relative)
+  # It's recommended to keep this in a separate private git repository
+  path: ./vault
+
+  structure:
+    # Filename for short-term memory
+    short_term: short-term.md
+
+    # Directory for episodic memories (time-bound events)
+    episodic_dir: episodes
+
+    # Directories for long-term memory (timeless knowledge)
+    longterm_dirs:
+      - concepts
+      - methods
+      - people
+
+mcp:
+  server:
+    # Port for MCP server ('auto' for automatic assignment)
+    port: auto
+
+    # Request timeout in milliseconds
+    timeout: 30000
+
+  tools:
+    # Which tools to enable ('all' or array of tool names)
+    enabled: all
+
+vector_db:
+  # Type of vector database (currently only 'chroma' is supported)
+  type: chroma
+
+  # Path for vector database storage (relative to vault)
+  path: .system/vectordb
+
+  collections:
+    episodic:
+      # Distance metric: cosine, l2, or ip (inner product)
+      distance: cosine
+
+    longterm:
+      distance: cosine
+
+embedding:
+  # Embedding model to use
+  # Options:
+  #   - sentence-transformers/all-MiniLM-L6-v2 (fast, 384 dims)
+  #   - sentence-transformers/all-mpnet-base-v2 (better quality, 768 dims)
+  model: sentence-transformers/all-MiniLM-L6-v2
+
+  # Device: cpu or cuda
+  device: cpu
+
+  # Batch size for embedding generation
+  batch_size: 32
+
+  # Embedding dimensions (must match model)
+  dimensions: 384
+
+file_watcher:
+  # Enable automatic embedding of new/changed files
+  enabled: true
+
+  # Debounce time in milliseconds (wait this long after last change)
+  debounce_ms: 5000
+
+  # Patterns to ignore
+  ignore_patterns:
+    - "*.tmp"
+    - ".DS_Store"
+    - "*.log"
+
+consolidation:
+  # Automatically trigger consolidation
+  auto_trigger: true
+
+  # Cron schedule for consolidation (daily at 2 AM)
+  schedule: "0 2 * * *"
+
+  # Maximum age for short-term memory items (in days)
+  short_term_max_age_days: 7
+
+  # Relevance threshold for keeping items (0-1)
+  relevance_threshold: 0.3
+
+logging:
+  # Log level: error, warn, info, debug, trace
+  level: info
+
+  # Log file path (relative to vault)
+  file: .system/logs/system.log
+
+  # Maximum log file size in MB
+  max_size_mb: 100
+
+  # Maximum number of log files to keep
+  max_files: 10
+
+# Environment variables can override these settings:
+# - DIMEMS_VAULT_PATH: vault.path
+# - DIMEMS_LOG_LEVEL: logging.level
+# - DIMEMS_EMBEDDING_DEVICE: embedding.device
