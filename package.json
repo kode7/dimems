@@ -1,6 +1,6 @@
 {
   "name": "dimems",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "A local AI-integrated digital memory system with three-layer architecture: short-term, episodic, and long-term memory",
   "type": "module",
   "main": "dist/index.js",
